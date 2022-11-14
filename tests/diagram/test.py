@@ -1,8 +1,8 @@
 
 import unittest
 
-from diagram import token
-from diagram import diagram
+from block_diagrammer import diagrams
+from block_diagrammer import token
 
 
 class test(unittest.TestCase):
@@ -26,7 +26,7 @@ class test(unittest.TestCase):
         lExpected[4].column = 3
 
 
-        oDiagram = diagram.New(lLines)
+        oDiagram = diagrams.New(lLines)
         lActual = oDiagram.tokens
 
         self.assertEqual(lExpected, lActual)
@@ -67,7 +67,7 @@ class test(unittest.TestCase):
         lExpected.extend(lFirstRow)
         lExpected.extend(lSecondRow)
 
-        oDiagram = diagram.New(lLines)
+        oDiagram = diagrams.New(lLines)
         lActual = oDiagram.tokens
 
         self.assertEqual(lExpected, lActual)
@@ -129,7 +129,7 @@ class test(unittest.TestCase):
         lExpected.extend(lSecondRow)
         lExpected.extend(lThirdRow)
 
-        oDiagram = diagram.New(lLines)
+        oDiagram = diagrams.New(lLines)
         lActual = oDiagram.tokens
 
         self.assertEqual(lExpected, lActual)
@@ -186,7 +186,7 @@ class test(unittest.TestCase):
         lThirdRow[5].column = 3
         lThirdRow[6].column = 5
 
-        oDiagram = diagram.New(lLines)
+        oDiagram = diagrams.New(lLines)
 
         ## Test column 0
         lActual = oDiagram.get_tokens_from_column(0)

@@ -1,5 +1,5 @@
 
-from diagram import token
+from block_diagrammer import token
 
 
 class New():
