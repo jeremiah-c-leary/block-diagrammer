@@ -53,14 +53,16 @@ class test(unittest.TestCase):
 
         lLines.append('          |B| <----> |C|')
         lSecondRow = []
+        lSecondRow.append(None)
+        lSecondRow.append(None)
         lSecondRow.append(token.Node('B', 10, 12))
         lSecondRow.append(token.Arrow(' <----> ', 13, 20))
         lSecondRow.append(token.Node('C', 21, 23))
-        for oToken in lSecondRow:
+        for oToken in lSecondRow[2::]:
             oToken.row = 1
-        lSecondRow[0].column = 2
-        lSecondRow[1].column = 3 
-        lSecondRow[2].column = 4 
+        lSecondRow[2].column = 2
+        lSecondRow[3].column = 3 
+        lSecondRow[4].column = 4 
 
         oDiagram = diagram.New(lLines)
 
@@ -85,8 +87,15 @@ class test(unittest.TestCase):
         lFirstRow.append(token.Node('B', 10, 12))
         lFirstRow.append(token.Arrow(' <----> ', 13, 20))
         lFirstRow.append(token.Node('C', 21, 23))
-        for oToken in lFirstRow:
-            oToken.row = 0
+        lFirstRow.append(None)
+        lFirstRow.append(None)
+
+        lFirstRow[0].row = 0
+        lFirstRow[1].row = 0
+        lFirstRow[2].row = 0
+        lFirstRow[3].row = 0
+        lFirstRow[4].row = 0
+
         lFirstRow[0].column = 0
         lFirstRow[1].column = 1
         lFirstRow[2].column = 2
@@ -95,14 +104,21 @@ class test(unittest.TestCase):
 
         lLines.append('          | | <----> | |')
         lSecondRow = []
+        lSecondRow.append(None)
+        lSecondRow.append(None)
         lSecondRow.append(token.Node(' ', 10, 12))
         lSecondRow.append(token.Arrow(' <----> ', 13, 20))
         lSecondRow.append(token.Node(' ', 21, 23))
-        for oToken in lSecondRow:
-            oToken.row = 1
-        lSecondRow[0].column = 2
-        lSecondRow[1].column = 3
-        lSecondRow[2].column = 4
+        lSecondRow.append(None)
+        lSecondRow.append(None)
+
+        lSecondRow[2].row = 1
+        lSecondRow[3].row = 1
+        lSecondRow[4].row = 1
+
+        lSecondRow[2].column = 2
+        lSecondRow[3].column = 3
+        lSecondRow[4].column = 4
 
         lLines.append('|D| ----> | | <----> |E| ----> |F|')
 
@@ -165,14 +181,16 @@ class test(unittest.TestCase):
 
         lLines.append('          | | <----> | |')
         lSecondRow = []
+        lSecondRow.append(None)
+        lSecondRow.append(None)
         lSecondRow.append(token.Node(' ', 10, 12))
         lSecondRow.append(token.Arrow(' <----> ', 13, 20))
         lSecondRow.append(token.Node(' ', 21, 23))
-        for oToken in lSecondRow:
+        for oToken in lSecondRow[2::]:
             oToken.row = 1
-        lSecondRow[0].column = 2
-        lSecondRow[1].column = 3
-        lSecondRow[2].column = 4
+        lSecondRow[2].column = 2
+        lSecondRow[3].column = 3
+        lSecondRow[4].column = 4
 
         lLines.append('|D| ----> | | <----> |E| ----> |F|')
 

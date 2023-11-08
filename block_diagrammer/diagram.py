@@ -5,37 +5,40 @@ from block_diagrammer import token
 class New():
 
     def __init__(self, lines: list):
-        self.tokens = []
+        self.map = []
         self.generate_tokens(lines) 
-        self.rows = get_max_row_number(self.tokens) + 1
-        self.columns = get_max_column_number(self.tokens) + 1
 
     def generate_tokens(self, lines: list):
+        lTokens = []
         for row, line in enumerate(lines):
             tokens = token.tokenize(line)
             assign_row_to_tokens(tokens, row)
-            self.tokens.extend(tokens)
-        assign_column(self.tokens)
+            lTokens.extend(tokens)
+        assign_column(lTokens)
+
+        self.rows = get_max_row_number(lTokens) + 1
+        self.columns = get_max_column_number(lTokens) + 1
+        
+        for row in range(0, self.rows):
+            lRow = []
+            for column in range(0, self.columns):
+                for oToken in lTokens:
+                    if oToken.row == row and oToken.column == column:
+                        lRow.append(oToken)
+                        break
+                else:
+                    lRow.append(None)
+            self.map.append(lRow)
 
     def get_tokens_from_column(self, column: int):
         lReturn = []
         for row in range(0, self.rows):
-            for token in self.tokens:
-                 if token.row == row and token.column == column:
-                     lReturn.append(token)
-                     break
-            else:
-                lReturn.append(None)
+            lReturn.append(self.map[row][column])
+
         return lReturn
 
     def get_tokens_from_row(self, row: int):
-        lReturn = []
-        for column in range(0, self.columns):
-            for token in self.tokens:
-                 if token.row == row and token.column == column:
-                     lReturn.append(token)
-                     break
-        return lReturn
+        return self.map[row]
 
     def get_number_of_columns(self):
         return self.columns
