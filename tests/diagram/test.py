@@ -53,8 +53,8 @@ class test(unittest.TestCase):
 
         lLines.append('          |B| <----> |C|')
         lSecondRow = []
-        lSecondRow.append(None)
-        lSecondRow.append(None)
+        lSecondRow.append(token.Empty('', 0, 0))
+        lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.Node('B', 10, 12))
         lSecondRow.append(token.Arrow(' <----> ', 13, 20))
         lSecondRow.append(token.Node('C', 21, 23))
@@ -87,8 +87,8 @@ class test(unittest.TestCase):
         lFirstRow.append(token.Node('B', 10, 12))
         lFirstRow.append(token.Arrow(' <----> ', 13, 20))
         lFirstRow.append(token.Node('C', 21, 23))
-        lFirstRow.append(None)
-        lFirstRow.append(None)
+        lFirstRow.append(token.Empty('', 0, 0))
+        lFirstRow.append(token.Empty('', 0, 0))
 
         lFirstRow[0].row = 0
         lFirstRow[1].row = 0
@@ -104,13 +104,13 @@ class test(unittest.TestCase):
 
         lLines.append('          | | <----> | |')
         lSecondRow = []
-        lSecondRow.append(None)
-        lSecondRow.append(None)
+        lSecondRow.append(token.Empty('', 0, 0))
+        lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.Node(' ', 10, 12))
         lSecondRow.append(token.Arrow(' <----> ', 13, 20))
         lSecondRow.append(token.Node(' ', 21, 23))
-        lSecondRow.append(None)
-        lSecondRow.append(None)
+        lSecondRow.append(token.Empty('', 0, 0))
+        lSecondRow.append(token.Empty('', 0, 0))
 
         lSecondRow[2].row = 1
         lSecondRow[3].row = 1
@@ -181,8 +181,8 @@ class test(unittest.TestCase):
 
         lLines.append('          | | <----> | |')
         lSecondRow = []
-        lSecondRow.append(None)
-        lSecondRow.append(None)
+        lSecondRow.append(token.Empty('', 0, 0))
+        lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.Node(' ', 10, 12))
         lSecondRow.append(token.Arrow(' <----> ', 13, 20))
         lSecondRow.append(token.Node(' ', 21, 23))
@@ -219,7 +219,7 @@ class test(unittest.TestCase):
 
         lExpectedColumn0 = []
         lExpectedColumn0.append(lFirstRow[0])
-        lExpectedColumn0.append(None)
+        lExpectedColumn0.append(token.Empty('', 0, 0))
         lExpectedColumn0.append(lThirdRow[0])
         self.assertEqual(lExpectedColumn0, lActual)
 
@@ -228,7 +228,7 @@ class test(unittest.TestCase):
 
         lExpectedColumn0 = []
         lExpectedColumn0.append(lFirstRow[1])
-        lExpectedColumn0.append(None)
+        lExpectedColumn0.append(token.Empty('', 0, 0))
         lExpectedColumn0.append(lThirdRow[1])
         self.assertEqual(lExpectedColumn0, lActual)
 
@@ -236,8 +236,8 @@ class test(unittest.TestCase):
         lActual = oDiagram.get_tokens_from_column(6)
 
         lExpectedColumn0 = []
-        lExpectedColumn0.append(None)
-        lExpectedColumn0.append(None)
+        lExpectedColumn0.append(token.Empty('', 0, 0))
+        lExpectedColumn0.append(token.Empty('', 0, 0))
         lExpectedColumn0.append(lThirdRow[6])
         self.assertEqual(lExpectedColumn0, lActual)
 

@@ -27,7 +27,7 @@ class New():
                         lRow.append(oToken)
                         break
                 else:
-                    lRow.append(None)
+                    lRow.append(token.Empty('', 0, 0))
             self.map.append(lRow)
 
     def get_tokens_from_column(self, column: int):

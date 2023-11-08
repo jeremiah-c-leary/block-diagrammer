@@ -16,6 +16,12 @@ class Token():
      return False
 
 
+class Empty(Token):
+
+    def __init__(self, value: str, start: int, end: int):
+        Token.__init__(self, value, start, end)
+
+
 class Node(Token):
 
     def __init__(self, value: str, start: int, end: int):
