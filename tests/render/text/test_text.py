@@ -120,8 +120,8 @@ class test(unittest.TestCase):
 
         lExpected = []
         lExpected.append('+-----+       +-----+')
-        lExpected.append('|     |]---->[|  B  |')
-        lExpected.append('|  A  |       +-----+')
+        lExpected.append('|  A  |]---->[|  B  |')
+        lExpected.append('|     |       +-----+')
         lExpected.append('|     |       +-----+')
         lExpected.append('|     |]<----[|  C  |')
         lExpected.append('+-----+       +-----+')
@@ -139,14 +139,44 @@ class test(unittest.TestCase):
 
         lExpected = []
         lExpected.append('+-----+       +-----+')
-        lExpected.append('|     |]---->[|     |')
+        lExpected.append('|  A  |]---->[|  B  |')
         lExpected.append('|     |       |     |')
         lExpected.append('|     |       |     |')
-        lExpected.append('|  A  |       |  B  |')
+        lExpected.append('|     |       |     |')
         lExpected.append('|     |       +-----+')
         lExpected.append('|     |       +-----+')
         lExpected.append('|     |]<----[|  C  |')
         lExpected.append('+-----+       +-----+')
+
+        lActual = oRenderer.render()
+        self.assertEqual(lExpected, lActual)
+
+    def test_multiple_nodes_version1(self):
+        lLines = []
+        lLines.append("|A| ----> |B| <---> |C|")
+        lLines.append("          | | <---> |C|")
+        lLines.append("|D| <---> | |          ")
+        lLines.append("          |B| <---- |E|")
+        lLines.append("          |F| ----->|E|")
+        oDiagram = diagram.New(lLines)
+        oRenderer = text.New(oDiagram)
+
+        lExpected = []
+        lExpected.append('+-----+       +-----+       +-----+')
+        lExpected.append('|  A  |]---->[|  B  |]<--->[|  C  |')
+        lExpected.append('+-----+       |     |       |     |')
+        lExpected.append('              |     |       |     |')
+        lExpected.append('              |     |]<--->[|     |')
+        lExpected.append('              |     |       +-----+')
+        lExpected.append('+-----+       |     |              ')
+        lExpected.append('|  D  |]<--->[|     |              ')
+        lExpected.append('+-----+       |     |              ')
+        lExpected.append('              |     |       +-----+')
+        lExpected.append('              |     |]<----[|  E  |')
+        lExpected.append('              +-----+       |     |')
+        lExpected.append('              +-----+       |     |')
+        lExpected.append('              |  F  |]---->[|     |')
+        lExpected.append('              +-----+       +-----+')
 
         lActual = oRenderer.render()
         self.assertEqual(lExpected, lActual)

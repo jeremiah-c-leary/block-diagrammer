@@ -12,6 +12,7 @@ class New():
         lTokens = tokenize_lines(lines)
         assign_column(lTokens)
         self.populate_map(lTokens)
+        self.merge_nodes()
 
     def populate_map(self, tokens: list):
         self.rows = get_max_row_number(tokens) + 1
@@ -40,6 +41,105 @@ class New():
     def get_number_of_columns(self):
         return self.columns
 
+    def merge_nodes(self):
+        if map_has_single_row(self.map):
+            for column in range(0, len(self.map[0]), 2):
+                for row in range(0, len(self.map)):
+                    self.map[row][column] = self.map[row][column].convert(token.SingleNode)
+        else:
+            for column in range(0, len(self.map[0]), 2):
+                lColumn = self.get_tokens_from_column(column)
+                for row in range(0, len(self.map)):
+                    if row == 0:
+                        if row_below_is_empty(self, row, column):
+                            convert_token_to_single(self, row, column)
+                        elif row_below_matches_value(self, row, column):
+                            convert_token_to_top(self, row, column)
+                        elif row_below_has_blank_value(self, row, column):
+                            convert_token_to_top(self, row, column)
+                            self.map[row+1][column].value = self.map[row][column].value
+                    elif row == len(self.map) - 1:
+                        if isinstance(self.map[row][column], token.Empty):
+                            continue
+                        elif row_above_matches_value(self, row, column):
+                            convert_token_to_bottom(self, row, column)
+                        elif self.map[row][column].value.isspace():
+                            convert_token_to_bottom(self, row, column)
+                            self.map[row][column].value = self.map[row-1][column].value
+                        else:
+                            convert_token_to_single(self, row, column)
+                    else:
+
+                        if isinstance(self.map[row][column], token.Empty):
+                            continue
+                        elif row_above_matches_value(self, row, column) and row_below_has_blank_value(self, row, column):
+                            convert_token_to_middle(self, row, column)
+                            self.map[row+1][column].value = self.map[row][column].value
+                        elif row_above_matches_value(self, row, column) and row_below_matches_value(self, row, column):
+                            convert_token_to_middle(self, row, column)
+                        elif row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
+                            convert_token_to_bottom(self, row, column)
+                        elif row_above_matches_value(self, row, column) and not row_below_matches_value(self, row, column):
+                            convert_token_to_bottom(self, row, column)
+                        elif row_above_is_empty(self, row, column) and row_below_is_empty(self, row, column):
+                            convert_token_to_single(self, row, column)
+                        elif not row_above_matches_value(self, row, column) and row_below_has_blank_value(self, row, column):
+                            convert_token_to_top(self, row, column)
+                            self.map[row+1][column].value = self.map[row][column].value
+                        elif not row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
+                            convert_token_to_single(self, row, column)
+                        elif not row_above_matches_value(self, row, column) and row_below_matches_value(self, row, column):
+                            convert_token_to_top(self, row, column)
+
+
+def convert_token_to_middle(self, row: int, column: int):
+    self.map[row][column] = self.map[row][column].convert(token.MiddleNode)
+
+
+def convert_token_to_top(self, row: int, column: int):
+    self.map[row][column] = self.map[row][column].convert(token.TopNode)
+
+
+def convert_token_to_bottom(self, row: int, column: int):
+    self.map[row][column] = self.map[row][column].convert(token.BottomNode)
+
+
+def convert_token_to_single(self, row: int, column: int):
+    self.map[row][column] = self.map[row][column].convert(token.SingleNode)
+
+
+def row_above_matches_value(self, row: int, column: int):
+    if self.map[row-1][column].value == self.map[row][column].value:
+        return True
+    return False                
+
+
+def row_below_matches_value(self, row: int, column: int):
+    if self.map[row+1][column].value == self.map[row][column].value:
+        return True
+    return False                
+
+
+def row_below_has_blank_value(self, row: int, column: int):
+    return self.map[row+1][column].value.isspace()
+
+
+def row_above_is_empty(self, row: int, column: int):
+    if isinstance(self.map[row-1][column], token.Empty):
+        return True
+    return False                
+
+
+def row_below_is_empty(self, row: int, column: int):
+    if isinstance(self.map[row+1][column], token.Empty):
+        return True
+    return False                
+
+
+def map_has_single_row(tokenMap: list):
+    if len(tokenMap) == 1:
+        return True
+    return False
 
 def assign_row_to_tokens(tokens: list, row: int):
     for token in tokens:
@@ -85,4 +185,5 @@ def tokenize_lines(lines: list):
         assign_row_to_tokens(tokens, row)
         lReturn.extend(tokens)
     return lReturn
+
 

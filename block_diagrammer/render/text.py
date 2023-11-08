@@ -56,6 +56,20 @@ class New():
         lExpanded.append('|     |')
         return lExpanded
 
+    def expand_top_node(self, oToken):
+        lExpanded = []
+        lExpanded.append('+-----+')
+        lExpanded.append(f'|  {oToken.value}  |')
+        lExpanded.append('|     |')
+        return lExpanded
+
+    def expand_bottom_node(self, oToken):
+        lExpanded = []
+        lExpanded.append('|     |')
+        lExpanded.append('|     |')
+        lExpanded.append('+-----+')
+        return lExpanded
+
     def expand_node(self, oToken: object):
         if oToken.value.isspace():
             return self.expand_blank_node(oToken)
@@ -63,6 +77,12 @@ class New():
             return self.expand_value_node(oToken)
 
     def expand_token(self, oToken: object):
+        if isinstance(oToken, token.TopNode):
+            return self.expand_top_node(oToken)
+        elif isinstance(oToken, token.MiddleNode):
+            return self.expand_blank_node(oToken)
+        elif isinstance(oToken, token.BottomNode):
+            return self.expand_bottom_node(oToken)
         if isinstance(oToken, token.Node):
             return self.expand_node(oToken)
         elif isinstance(oToken, token.Arrow):

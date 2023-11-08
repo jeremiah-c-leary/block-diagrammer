@@ -21,11 +21,20 @@ class Empty(Token):
     def __init__(self, value: str, start: int, end: int):
         Token.__init__(self, value, start, end)
 
+    def convert(self, tokenType):
+        return self
+
 
 class Node(Token):
 
     def __init__(self, value: str, start: int, end: int):
         Token.__init__(self, value, start, end)
+
+    def convert(self, tokenType):
+       oReturn = tokenType(self.value, self.start, self.end)
+       oReturn.row = self.row
+       oReturn.column = self.column
+       return oReturn
 
 
 class SingleNode(Node):
