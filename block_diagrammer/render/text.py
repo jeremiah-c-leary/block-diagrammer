@@ -68,23 +68,6 @@ class New():
                 lTemp = self.expand_token(oToken)
                 self.columns[column].extend(lTemp)
 
-    def merge_nodes_in_column(self):
-        for column in range(0, self.diagram.get_number_of_columns(), 2):
-            sPreviousRow = ''
-            iLastRow = len(self.columns[column]) - 1
-            for row in range(0, len(self.columns[column])):
-                sRow = self.columns[column][row]
-                if row == 0 and sRow == '|     |':
-                    self.columns[column][row] = '+-----+'
-                elif row == iLastRow and sRow == '|     |':
-                    self.columns[column][row] = '+-----+'
-                else:
-                    if sRow == '+-----+' and sPreviousRow == '|     |':
-                        self.columns[column][row] = '|     |'
-                    if sRow == '|     |' and sPreviousRow == '+-----+' and row > 1:
-                        self.columns[column][row - 1] = '|     |'
-                sPreviousRow = self.columns[column][row]
-
     def expand_blank_node(self, oToken):
         lExpanded = []
         lExpanded.append('|     |')
@@ -160,13 +143,5 @@ class New():
         return self.rendered
 
 
-
 def add_blank_line(lines: list):
     lines.append('       ')
-
-
-class Cell():
-
-    def __init__(self):
-        lines = []
-
