@@ -9,20 +9,17 @@ class New():
         self.generate_tokens(lines) 
 
     def generate_tokens(self, lines: list):
-        lTokens = []
-        for row, line in enumerate(lines):
-            tokens = token.tokenize(line)
-            assign_row_to_tokens(tokens, row)
-            lTokens.extend(tokens)
+        lTokens = tokenize_lines(lines)
         assign_column(lTokens)
+        self.populate_map(lTokens)
 
-        self.rows = get_max_row_number(lTokens) + 1
-        self.columns = get_max_column_number(lTokens) + 1
-        
+    def populate_map(self, tokens: list):
+        self.rows = get_max_row_number(tokens) + 1
+        self.columns = get_max_column_number(tokens) + 1
         for row in range(0, self.rows):
             lRow = []
             for column in range(0, self.columns):
-                for oToken in lTokens:
+                for oToken in tokens:
                     if oToken.row == row and oToken.column == column:
                         lRow.append(oToken)
                         break
@@ -79,3 +76,13 @@ def get_max_dict_value(tokens: list, attribute_name: str):
     for token in tokens:
         iMax = max(iMax, token.__dict__[attribute_name])
     return iMax
+
+
+def tokenize_lines(lines: list):
+    lReturn = []
+    for row, line in enumerate(lines):
+        tokens = token.tokenize(line)
+        assign_row_to_tokens(tokens, row)
+        lReturn.extend(tokens)
+    return lReturn
+
