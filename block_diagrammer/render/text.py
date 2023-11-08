@@ -10,7 +10,6 @@ class New():
         self.rendered = None
 
     def expand_arrow(self, oToken: object):
-#E        print(f'::{oToken.value}::')
         lExpanded = []
         add_blank_line(lExpanded)
         if oToken.value.isspace():
@@ -21,6 +20,44 @@ class New():
             sLeft = sValue[0]
             sRight = sValue[-1] 
             lExpanded.append(f']{sLeft}---{sRight}[')
+        add_blank_line(lExpanded)
+        return lExpanded
+
+    def expand_start_arrow(self, oToken: object):
+        lExpanded = []
+        add_blank_line(lExpanded)
+        if oToken.value.isspace():
+            add_blank_line(lExpanded)
+        else:
+            sValue = oToken.value.strip()
+             
+            sLeft = sValue[0]
+            lExpanded.append(f']{sLeft}-----')
+        add_blank_line(lExpanded)
+        return lExpanded
+
+    def expand_middle_arrow(self, oToken: object):
+        lExpanded = []
+        add_blank_line(lExpanded)
+        if oToken.value.isspace():
+            add_blank_line(lExpanded)
+        else:
+            sValue = oToken.value.strip()
+             
+            lExpanded.append(f'-------')
+        add_blank_line(lExpanded)
+        return lExpanded
+
+    def expand_end_arrow(self, oToken: object):
+        lExpanded = []
+        add_blank_line(lExpanded)
+        if oToken.value.isspace():
+            add_blank_line(lExpanded)
+        else:
+            sValue = oToken.value.strip()
+             
+            sRight = sValue[-1] 
+            lExpanded.append(f'-----{sRight}[')
         add_blank_line(lExpanded)
         return lExpanded
 
@@ -38,7 +75,6 @@ class New():
             for row in range(0, len(self.columns[column])):
                 sRow = self.columns[column][row]
                 if row == 0 and sRow == '|     |':
- #                   print('Got Here')
                     self.columns[column][row] = '+-----+'
                 elif row == iLastRow and sRow == '|     |':
                     self.columns[column][row] = '+-----+'
@@ -83,8 +119,14 @@ class New():
             return self.expand_blank_node(oToken)
         elif isinstance(oToken, token.BottomNode):
             return self.expand_bottom_node(oToken)
-        if isinstance(oToken, token.Node):
+        elif isinstance(oToken, token.Node):
             return self.expand_node(oToken)
+        elif isinstance(oToken, token.StartArrow):
+            return self.expand_start_arrow(oToken)
+        elif isinstance(oToken, token.MiddleArrow):
+            return self.expand_middle_arrow(oToken)
+        elif isinstance(oToken, token.EndArrow):
+            return self.expand_end_arrow(oToken)
         elif isinstance(oToken, token.Arrow):
             return self.expand_arrow(oToken)
         else:
@@ -114,7 +156,6 @@ class New():
 
     def render(self):
         self.expand_each_column()
-#        self.merge_nodes_in_column()
         self.render_by_row()
         return self.rendered
 

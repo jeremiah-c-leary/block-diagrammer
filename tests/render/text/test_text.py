@@ -181,3 +181,33 @@ class test(unittest.TestCase):
         lActual = oRenderer.render()
         self.assertEqual(lExpected, lActual)
 
+    def test_expanding_arrows_across_columns(self):
+        lLines = []
+        lLines.append("|A| ----> |B| <---> |C|       |X|")
+        lLines.append("|A| --------------> |C| <---> | |")
+        lLines.append("|D| <-------------> |E|")
+        lLines.append("          |Y| <---- |E| <---> |W|")
+        lLines.append("|Z| ------------------------> |W|")
+        oDiagram = diagram.New(lLines)
+        oRenderer = text.New(oDiagram)
+
+        lExpected = []
+        lExpected.append('+-----+       +-----+       +-----+       +-----+')
+        lExpected.append('|  A  |]---->[|  B  |]<--->[|  C  |       |  X  |')
+        lExpected.append('|     |       +-----+       |     |       |     |')
+        lExpected.append('|     |                     |     |       |     |')
+        lExpected.append('|     |]------------------>[|     |]<--->[|     |')
+        lExpected.append('+-----+                     +-----+       +-----+')
+        lExpected.append('+-----+                     +-----+              ')
+        lExpected.append('|  D  |]<----------------->[|  E  |              ')
+        lExpected.append('+-----+                     |     |              ')
+        lExpected.append('              +-----+       |     |       +-----+')
+        lExpected.append('              |  Y  |]<----[|     |]<--->[|  W  |')
+        lExpected.append('              +-----+       +-----+       |     |')
+        lExpected.append('+-----+                                   |     |')
+        lExpected.append('|  Z  |]-------------------------------->[|     |')
+        lExpected.append('+-----+                                   +-----+')
+
+        lActual = oRenderer.render()
+        self.assertEqual(lExpected, lActual)
+

@@ -66,6 +66,30 @@ class Arrow(Token):
     def __init__(self, value: str, start: int, end: int):
         Token.__init__(self, value, start, end)
 
+    def convert(self, tokenType):
+       oReturn = tokenType(self.value, self.start, self.end)
+       oReturn.row = self.row
+       oReturn.column = self.column
+       return oReturn
+
+
+class StartArrow(Arrow):
+
+    def __init__(self, value: str, start: int, end: int):
+        Arrow.__init__(self, value, start, end)
+
+
+class MiddleArrow(Arrow):
+
+    def __init__(self, value: str, start: int, end: int):
+        Arrow.__init__(self, value, start, end)
+
+
+class EndArrow(Arrow):
+
+    def __init__(self, value: str, start: int, end: int):
+        Arrow.__init__(self, value, start, end)
+
 
 def extract_nodes(line: str) -> list:
     lReturn = []

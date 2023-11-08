@@ -13,6 +13,7 @@ class New():
         assign_column(lTokens)
         self.populate_map(lTokens)
         self.merge_nodes()
+        self.expand_arrows_across_columns()
 
     def populate_map(self, tokens: list):
         self.rows = get_max_row_number(tokens) + 1
@@ -40,6 +41,16 @@ class New():
 
     def get_number_of_columns(self):
         return self.columns
+
+    def expand_arrows_across_columns(self):
+        for row in range(0, self.rows):
+            for column in range(1, self.columns - 1):
+                if previous_column_is_node(self, row, column) and current_column_is_arrow(self, row, column) and next_column_is_empty(self, row, column):
+                    convert_current_token_to_starting_arrow(self, row, column)
+                    convert_next_token_to_ending_arrow(self, row, column)
+                elif previous_column_is_arrow(self, row, column) and current_column_is_arrow(self, row, column) and next_column_is_empty(self, row, column):
+                    convert_current_token_to_middle_arrow(self, row, column)
+                    convert_next_token_to_ending_arrow(self, row, column)
 
     def merge_nodes(self):
         if map_has_single_row(self.map):
@@ -108,6 +119,18 @@ def convert_token_to_single(self, row: int, column: int):
     self.map[row][column] = self.map[row][column].convert(token.SingleNode)
 
 
+def convert_current_token_to_starting_arrow(self, row: int, column: int):
+    self.map[row][column] = self.map[row][column].convert(token.StartArrow)
+
+
+def convert_next_token_to_ending_arrow(self, row: int, column: int):
+    self.map[row][column+1] = self.map[row][column].convert(token.EndArrow)
+
+
+def convert_current_token_to_middle_arrow(self, row: int, column: int):
+    self.map[row][column] = self.map[row][column].convert(token.MiddleArrow)
+
+
 def row_above_matches_value(self, row: int, column: int):
     if self.map[row-1][column].value == self.map[row][column].value:
         return True
@@ -141,10 +164,35 @@ def map_has_single_row(tokenMap: list):
         return True
     return False
 
+
 def assign_row_to_tokens(tokens: list, row: int):
     for token in tokens:
         token.row = row
-        
+
+
+def previous_column_is_node(self, row: int, column: int):
+    if isinstance(self.map[row][column-1], token.Node):
+        return True
+    return False
+
+
+def previous_column_is_arrow(self, row: int, column: int):
+    if isinstance(self.map[row][column-1], token.Arrow):
+        return True
+    return False
+
+
+def current_column_is_arrow(self, row: int, column: int):
+    if isinstance(self.map[row][column], token.Arrow):
+        return True
+    return False
+
+
+def next_column_is_empty(self, row: int, column: int):
+    if isinstance(self.map[row][column+1], token.Empty):
+        return True
+    return False
+
 
 def assign_column(tokens: list):
 #    print('Hello')
