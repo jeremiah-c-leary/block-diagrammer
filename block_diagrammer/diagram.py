@@ -28,6 +28,18 @@ class New():
                 lReturn.append(None)
         return lReturn
 
+    def get_tokens_from_row(self, row: int):
+        lReturn = []
+        for column in range(0, self.columns):
+            for token in self.tokens:
+                 if token.row == row and token.column == column:
+                     lReturn.append(token)
+                     break
+        return lReturn
+
+    def get_number_of_columns(self):
+        return self.columns
+
 
 def assign_row_to_tokens(tokens: list, row: int):
     for token in tokens:

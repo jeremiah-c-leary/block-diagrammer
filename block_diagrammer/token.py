@@ -22,6 +22,30 @@ class Node(Token):
         Token.__init__(self, value, start, end)
 
 
+class SingleNode(Node):
+
+    def __init__(self, value: str, start: int, end: int):
+        Node.__init__(self, value, start, end)
+
+
+class TopNode(Node):
+
+    def __init__(self, value: str, start: int, end: int):
+        Node.__init__(self, value, start, end)
+
+
+class MiddleNode(Node):
+
+    def __init__(self, value: str, start: int, end: int):
+        Node.__init__(self, value, start, end)
+
+
+class BottomNode(Node):
+
+    def __init__(self, value: str, start: int, end: int):
+        Node.__init__(self, value, start, end)
+
+
 class Arrow(Token):
 
     def __init__(self, value: str, start: int, end: int):
