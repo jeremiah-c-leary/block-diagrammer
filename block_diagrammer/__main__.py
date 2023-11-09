@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 
-import sys
-import os
-import yaml
-
 from . import cmd_line_args
 from . import subcommand
 from . import utils

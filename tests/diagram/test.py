@@ -1,4 +1,3 @@
-import pprint
 import unittest
 
 from block_diagrammer import diagram

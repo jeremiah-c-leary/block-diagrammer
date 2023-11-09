@@ -7,7 +7,7 @@ class New():
     def __init__(self, lines: list):
         self.map = []
         self.column_widths = []
-        self.generate_tokens(lines) 
+        self.generate_tokens(lines)
 
     def generate_tokens(self, lines: list):
         lTokens = tokenize_lines(lines)
@@ -74,7 +74,6 @@ class New():
                     self.map[row][column] = self.map[row][column].convert(token.SingleNode)
         else:
             for column in range(0, len(self.map[0]), 2):
-                lColumn = self.get_tokens_from_column(column)
                 for row in range(0, len(self.map)):
                     if row == 0:
                         if row_below_is_empty(self, row, column):
@@ -146,13 +145,13 @@ def convert_current_token_to_middle_arrow(self, row: int, column: int):
 def row_above_matches_value(self, row: int, column: int):
     if self.map[row-1][column].value == self.map[row][column].value:
         return True
-    return False                
+    return False
 
 
 def row_below_matches_value(self, row: int, column: int):
     if self.map[row+1][column].value == self.map[row][column].value:
         return True
-    return False                
+    return False
 
 
 def row_below_has_blank_value(self, row: int, column: int):
@@ -164,13 +163,13 @@ def row_below_has_blank_value(self, row: int, column: int):
 def row_above_is_empty(self, row: int, column: int):
     if isinstance(self.map[row-1][column], token.Empty):
         return True
-    return False                
+    return False
 
 
 def row_below_is_empty(self, row: int, column: int):
     if isinstance(self.map[row+1][column], token.Empty):
         return True
-    return False                
+    return False
 
 
 def map_has_single_row(tokenMap: list):
@@ -180,8 +179,8 @@ def map_has_single_row(tokenMap: list):
 
 
 def assign_row_to_tokens(tokens: list, row: int):
-    for token in tokens:
-        token.row = row
+    for oToken in tokens:
+        oToken.row = row
 
 
 def previous_column_is_node(self, row: int, column: int):
@@ -211,14 +210,14 @@ def next_column_is_empty(self, row: int, column: int):
 def assign_column(tokens: list):
     dIndexes = {}
     for oToken in tokens:
-        dIndexes[oToken.start] = []    
+        dIndexes[oToken.start] = []
     for oToken in tokens:
         dIndexes[oToken.start].append(oToken)
     lIndexes = list(dIndexes.keys())
     lIndexes.sort()
     for iColumn, iIndex in enumerate(lIndexes):
         for oToken in dIndexes[iIndex]:
-            oToken.column = iColumn 
+            oToken.column = iColumn
 
 
 def get_max_column_number(tokens: list):

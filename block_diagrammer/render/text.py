@@ -14,7 +14,7 @@ class New():
         lExpanded.append(empty_line(width))
 
         sLeft = oToken.value[0]
-        sRight = oToken.value[-1] 
+        sRight = oToken.value[-1]
         lExpanded.append(']' + sLeft + '-' * (width - 2) + sRight + '[')
 
         lExpanded.append(empty_line(width))
@@ -23,7 +23,7 @@ class New():
     def expand_start_arrow(self, oToken: object, width: int):
         lExpanded = []
         lExpanded.append(empty_line(width))
-         
+
         sLeft = oToken.value[0]
 
         lExpanded.append(']' + sLeft + '-' * width)
@@ -34,7 +34,7 @@ class New():
     def expand_middle_arrow(self, oToken: object, width: int):
         lExpanded = []
         lExpanded.append(empty_line(width))
-             
+
         lExpanded.append('-' + '-' * width + '-')
         lExpanded.append(empty_line(width))
         return lExpanded
@@ -42,7 +42,7 @@ class New():
     def expand_end_arrow(self, oToken: object, width: int):
         lExpanded = []
         lExpanded.append(empty_line(width))
-        sRight = oToken.value[-1] 
+        sRight = oToken.value[-1]
         lExpanded.append('-' * width + sRight + '[')
         lExpanded.append(empty_line(width))
         return lExpanded

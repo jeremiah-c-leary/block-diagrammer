@@ -1,7 +1,6 @@
-import sys
-import os
 
 import argparse
+import sys
 
 
 def parse_command_line_arguments():
