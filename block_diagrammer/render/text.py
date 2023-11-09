@@ -9,124 +9,108 @@ class New():
         self.columns = []
         self.rendered = None
 
-    def expand_arrow(self, oToken: object):
+    def expand_arrow(self, oToken: object, width: int):
         lExpanded = []
-        add_blank_line(lExpanded)
-        if oToken.value.isspace():
-            add_blank_line(lExpanded)
-        else:
-            sValue = oToken.value.strip()
-             
-            sLeft = sValue[0]
-            sRight = sValue[-1] 
-            lExpanded.append(f']{sLeft}---{sRight}[')
-        add_blank_line(lExpanded)
+        lExpanded.append(empty_line(width))
+
+        sLeft = oToken.value[0]
+        sRight = oToken.value[-1] 
+        lExpanded.append(']' + sLeft + '-' * (width - 2) + sRight + '[')
+
+        lExpanded.append(empty_line(width))
         return lExpanded
 
-    def expand_start_arrow(self, oToken: object):
+    def expand_start_arrow(self, oToken: object, width: int):
         lExpanded = []
-        add_blank_line(lExpanded)
-        if oToken.value.isspace():
-            add_blank_line(lExpanded)
-        else:
-            sValue = oToken.value.strip()
-             
-            sLeft = sValue[0]
-            lExpanded.append(f']{sLeft}-----')
-        add_blank_line(lExpanded)
+        lExpanded.append(empty_line(width))
+         
+        sLeft = oToken.value[0]
+
+        lExpanded.append(']' + sLeft + '-' * width)
+        lExpanded.append(empty_line(width))
+
         return lExpanded
 
-    def expand_middle_arrow(self, oToken: object):
+    def expand_middle_arrow(self, oToken: object, width: int):
         lExpanded = []
-        add_blank_line(lExpanded)
-        if oToken.value.isspace():
-            add_blank_line(lExpanded)
-        else:
-            sValue = oToken.value.strip()
+        lExpanded.append(empty_line(width))
              
-            lExpanded.append(f'-------')
-        add_blank_line(lExpanded)
+        lExpanded.append('-' + '-' * width + '-')
+        lExpanded.append(empty_line(width))
         return lExpanded
 
-    def expand_end_arrow(self, oToken: object):
+    def expand_end_arrow(self, oToken: object, width: int):
         lExpanded = []
-        add_blank_line(lExpanded)
-        if oToken.value.isspace():
-            add_blank_line(lExpanded)
-        else:
-            sValue = oToken.value.strip()
-             
-            sRight = sValue[-1] 
-            lExpanded.append(f'-----{sRight}[')
-        add_blank_line(lExpanded)
+        lExpanded.append(empty_line(width))
+        sRight = oToken.value[-1] 
+        lExpanded.append('-' * width + sRight + '[')
+        lExpanded.append(empty_line(width))
         return lExpanded
 
     def expand_each_column(self):
         for column in range(0, self.diagram.get_number_of_columns()):
             self.columns.append([])
             for oToken in self.diagram.get_tokens_from_column(column):
-                lTemp = self.expand_token(oToken)
+                lTemp = self.expand_token(oToken, column)
                 self.columns[column].extend(lTemp)
 
-    def expand_blank_node(self, oToken):
+    def expand_blank_node(self, oToken, width: int):
         lExpanded = []
-        lExpanded.append('|     |')
-        lExpanded.append('|     |')
-        lExpanded.append('|     |')
+        lExpanded.append(empty_node_line(width))
+        lExpanded.append(empty_node_line(width))
+        lExpanded.append(empty_node_line(width))
         return lExpanded
 
-    def expand_top_node(self, oToken):
+    def expand_top_node(self, oToken, width: int):
         lExpanded = []
-        lExpanded.append('+-----+')
-        lExpanded.append(f'|  {oToken.value}  |')
-        lExpanded.append('|     |')
+        lExpanded.append(bar_node_line(width))
+        lExpanded.append(value_node_line(width, oToken.value))
+        lExpanded.append(empty_node_line(width))
         return lExpanded
 
-    def expand_bottom_node(self, oToken):
+    def expand_bottom_node(self, oToken, width: int):
         lExpanded = []
-        lExpanded.append('|     |')
-        lExpanded.append('|     |')
-        lExpanded.append('+-----+')
+        lExpanded.append(empty_node_line(width))
+        lExpanded.append(empty_node_line(width))
+        lExpanded.append(bar_node_line(width))
         return lExpanded
 
-    def expand_node(self, oToken: object):
-        if oToken.value.isspace():
-            return self.expand_blank_node(oToken)
-        else:
-            return self.expand_value_node(oToken)
+    def expand_node(self, oToken: object, width: int):
+        return self.expand_value_node(oToken, width)
 
-    def expand_token(self, oToken: object):
+    def expand_token(self, oToken: object, column: int):
+        column_width = self.diagram.get_column_width(column)
         if isinstance(oToken, token.TopNode):
-            return self.expand_top_node(oToken)
+            return self.expand_top_node(oToken, column_width)
         elif isinstance(oToken, token.MiddleNode):
-            return self.expand_blank_node(oToken)
+            return self.expand_blank_node(oToken, column_width)
         elif isinstance(oToken, token.BottomNode):
-            return self.expand_bottom_node(oToken)
+            return self.expand_bottom_node(oToken, column_width)
         elif isinstance(oToken, token.Node):
-            return self.expand_node(oToken)
+            return self.expand_node(oToken, column_width)
         elif isinstance(oToken, token.StartArrow):
-            return self.expand_start_arrow(oToken)
+            return self.expand_start_arrow(oToken, column_width)
         elif isinstance(oToken, token.MiddleArrow):
-            return self.expand_middle_arrow(oToken)
+            return self.expand_middle_arrow(oToken, column_width)
         elif isinstance(oToken, token.EndArrow):
-            return self.expand_end_arrow(oToken)
+            return self.expand_end_arrow(oToken, column_width)
         elif isinstance(oToken, token.Arrow):
-            return self.expand_arrow(oToken)
+            return self.expand_arrow(oToken, column_width)
         else:
-            return self.expand_empty()
+            return self.expand_empty(column_width)
 
-    def expand_empty(self):
+    def expand_empty(self, width: int):
         lExpanded = []
-        lExpanded.append('       ')
-        lExpanded.append('       ')
-        lExpanded.append('       ')
+        lExpanded.append(empty_line(width))
+        lExpanded.append(empty_line(width))
+        lExpanded.append(empty_line(width))
         return lExpanded
 
-    def expand_value_node(self, oToken):
+    def expand_value_node(self, oToken: object, width: int):
         lExpanded = []
-        lExpanded.append('+-----+')
-        lExpanded.append(f'|  {oToken.value}  |')
-        lExpanded.append('+-----+')
+        lExpanded.append(bar_node_line(width))
+        lExpanded.append(value_node_line(width, oToken.value))
+        lExpanded.append(bar_node_line(width))
         return lExpanded
 
     def render_by_row(self):
@@ -143,5 +127,17 @@ class New():
         return self.rendered
 
 
-def add_blank_line(lines: list):
-    lines.append('       ')
+def empty_line(width: int):
+    return ' ' + ' ' * width + ' '
+
+
+def empty_node_line(width: int):
+    return '|' + ' ' * width + '|'
+
+
+def bar_node_line(width: int):
+    return '+' + '-' * width + '+'
+
+
+def value_node_line(width: int, value: str):
+    return '|' + value.center(width) + '|'

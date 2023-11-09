@@ -47,7 +47,7 @@ class test(unittest.TestCase):
 
         lExpected = []
 
-        lExpected.append(token.Arrow(' ----> ', 3, 9))
+        lExpected.append(token.Arrow('---->', 3, 9))
 
         lActual = token.extract_arrows(sLine)
 
@@ -58,8 +58,8 @@ class test(unittest.TestCase):
 
         lExpected = []
 
-        lExpected.append(token.Arrow(' ----> ', 3, 9))
-        lExpected.append(token.Arrow(' <----> ', 13, 20))
+        lExpected.append(token.Arrow('---->', 3, 9))
+        lExpected.append(token.Arrow('<---->', 13, 20))
 
         lActual = token.extract_arrows(sLine)
 
@@ -70,7 +70,7 @@ class test(unittest.TestCase):
 
         lExpected = []
 
-        lExpected.append(token.Arrow(' <----> ', 13, 20))
+        lExpected.append(token.Arrow('<---->', 13, 20))
 
         lActual = token.extract_arrows(sLine)
 
@@ -84,8 +84,8 @@ class test(unittest.TestCase):
         lExpected.append(token.Node('A', 0, 2))
         lExpected.append(token.Node('B', 10, 12))
         lExpected.append(token.Node('C', 21, 23))
-        lExpected.append(token.Arrow(' ----> ', 3, 9))
-        lExpected.append(token.Arrow(' <----> ', 13, 20))
+        lExpected.append(token.Arrow('---->', 3, 9))
+        lExpected.append(token.Arrow('<---->', 13, 20))
 
         lActual = token.tokenize(sLine)
 
@@ -98,7 +98,7 @@ class test(unittest.TestCase):
 
         lExpected.append(token.Node('B', 10, 12))
         lExpected.append(token.Node('C', 21, 23))
-        lExpected.append(token.Arrow(' <----> ', 13, 20))
+        lExpected.append(token.Arrow('<---->', 13, 20))
 
         lActual = token.tokenize(sLine)
 

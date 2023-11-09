@@ -17,7 +17,7 @@ class test(unittest.TestCase):
         lExpected.append('|  A  |')
         lExpected.append('+-----+')
 
-        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(0)[0])
+        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(0)[0], 5)
         self.assertEqual(lExpected, lActual)
 
         lExpected = []
@@ -25,7 +25,28 @@ class test(unittest.TestCase):
         lExpected.append('|  B  |')
         lExpected.append('+-----+')
 
-        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(2)[0])
+        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(2)[0], 5)
+        self.assertEqual(lExpected, lActual)
+
+    def test_node_expansion_with_larger_node_values(self):
+        lLines = ['|FIFO| ----> |      U_MY_FIFO    |']
+        oDiagram = diagram.New(lLines)
+        oRenderer = text.New(oDiagram)
+
+        lExpected = []
+        lExpected.append('+------+')
+        lExpected.append('| FIFO |')
+        lExpected.append('+------+')
+
+        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(0)[0], 6)
+        self.assertEqual(lExpected, lActual)
+
+        lExpected = []
+        lExpected.append('+-----------+')
+        lExpected.append('| U_MY_FIFO |')
+        lExpected.append('+-----------+')
+
+        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(2)[0], 11)
         self.assertEqual(lExpected, lActual)
 
     def test_left_arrow_expansion(self):
@@ -38,7 +59,7 @@ class test(unittest.TestCase):
         lExpected.append(']---->[')
         lExpected.append('       ')
 
-        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0])
+        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
         self.assertEqual(lExpected, lActual)
 
     def test_right_arrow_expansion(self):
@@ -51,7 +72,20 @@ class test(unittest.TestCase):
         lExpected.append(']<----[')
         lExpected.append('       ')
 
-        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0])
+        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
+        self.assertEqual(lExpected, lActual)
+
+    def test_right_arrow_expansion_with_extra_spaces(self):
+        lLines = ['|A|          <----         |B|']
+        oDiagram = diagram.New(lLines)
+        oRenderer = text.New(oDiagram)
+
+        lExpected = []
+        lExpected.append('       ')
+        lExpected.append(']<----[')
+        lExpected.append('       ')
+
+        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
         self.assertEqual(lExpected, lActual)
 
     def test_bidir_arrow_expansion(self):
@@ -64,7 +98,7 @@ class test(unittest.TestCase):
         lExpected.append(']<--->[')
         lExpected.append('       ')
 
-        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0])
+        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
         self.assertEqual(lExpected, lActual)
 
     def test_two_nodes_with_one_arrow(self):

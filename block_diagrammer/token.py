@@ -97,7 +97,7 @@ def extract_nodes(line: str) -> list:
     for iChar, sChar in enumerate(line):
         if sChar == '|' and bNodeFound:
             bNodeFound = False
-            lReturn.append(Node(sName, iStart, iChar))
+            lReturn.append(Node(sName.strip(), iStart, iChar))
             continue
         if bNodeFound:
             sName += sChar
@@ -123,7 +123,10 @@ def extract_arrows(line: str) -> list:
             bNodeFound = True
             iEnd = iChar - 1
             if iStart is not None:
-                lReturn.append(Arrow(sName, iStart, iEnd))
+                if sName.isspace():
+                    lReturn.append(Empty('', iStart, iEnd))
+                else:
+                    lReturn.append(Arrow(sName.strip(), iStart, iEnd))
             sName = ''
         if not bNodeFound:
             sName += sChar

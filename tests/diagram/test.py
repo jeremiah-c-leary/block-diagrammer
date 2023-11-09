@@ -13,9 +13,9 @@ class test(unittest.TestCase):
 
         lExpected = []
         lExpected.append(token.SingleNode('A', 0, 2))
-        lExpected.append(token.Arrow(' ----> ', 3, 9))
+        lExpected.append(token.Arrow('---->', 3, 9))
         lExpected.append(token.SingleNode('B', 10, 12))
-        lExpected.append(token.Arrow(' <----> ', 13, 20))
+        lExpected.append(token.Arrow('<---->', 13, 20))
         lExpected.append(token.SingleNode('C', 21, 23))
         for oToken in lExpected:
             oToken.row = 0
@@ -39,9 +39,9 @@ class test(unittest.TestCase):
 
         lFirstRow = []
         lFirstRow.append(token.SingleNode('A', 0, 2))
-        lFirstRow.append(token.Arrow(' ----> ', 3, 9))
+        lFirstRow.append(token.Arrow('---->', 3, 9))
         lFirstRow.append(token.TopNode('B', 10, 12))
-        lFirstRow.append(token.Arrow(' <----> ', 13, 20))
+        lFirstRow.append(token.Arrow('<---->', 13, 20))
         lFirstRow.append(token.TopNode('C', 21, 23))
         for oToken in lFirstRow:
             oToken.row = 0
@@ -56,7 +56,7 @@ class test(unittest.TestCase):
         lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.BottomNode('B', 10, 12))
-        lSecondRow.append(token.Arrow(' <----> ', 13, 20))
+        lSecondRow.append(token.Arrow('<---->', 13, 20))
         lSecondRow.append(token.BottomNode('C', 21, 23))
         for oToken in lSecondRow[2::]:
             oToken.row = 1
@@ -83,9 +83,9 @@ class test(unittest.TestCase):
 
         lFirstRow = []
         lFirstRow.append(token.SingleNode('A', 0, 2))
-        lFirstRow.append(token.Arrow(' ----> ', 3, 9))
+        lFirstRow.append(token.Arrow('---->', 3, 9))
         lFirstRow.append(token.TopNode('B', 10, 12))
-        lFirstRow.append(token.Arrow(' <----> ', 13, 20))
+        lFirstRow.append(token.Arrow('<---->', 13, 20))
         lFirstRow.append(token.TopNode('C', 21, 23))
         lFirstRow.append(token.Empty('', 0, 0))
         lFirstRow.append(token.Empty('', 0, 0))
@@ -107,7 +107,7 @@ class test(unittest.TestCase):
         lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.MiddleNode('B', 10, 12))
-        lSecondRow.append(token.Arrow(' <----> ', 13, 20))
+        lSecondRow.append(token.Arrow('<---->', 13, 20))
         lSecondRow.append(token.BottomNode('C', 21, 23))
         lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.Empty('', 0, 0))
@@ -124,11 +124,11 @@ class test(unittest.TestCase):
 
         lThirdRow = []
         lThirdRow.append(token.SingleNode('D', 0, 2))
-        lThirdRow.append(token.Arrow(' ----> ', 3, 9))
+        lThirdRow.append(token.Arrow('---->', 3, 9))
         lThirdRow.append(token.BottomNode('B', 10, 12))
-        lThirdRow.append(token.Arrow(' <----> ', 13, 20))
+        lThirdRow.append(token.Arrow('<---->', 13, 20))
         lThirdRow.append(token.SingleNode('E', 21, 23))
-        lThirdRow.append(token.Arrow(' ----> ', 24, 30))
+        lThirdRow.append(token.Arrow('---->', 24, 30))
         lThirdRow.append(token.SingleNode('F', 31, 33))
 
         for oToken in lThirdRow:
@@ -167,9 +167,9 @@ class test(unittest.TestCase):
 
         lFirstRow = []
         lFirstRow.append(token.SingleNode('A', 0, 2))
-        lFirstRow.append(token.Arrow(' ----> ', 3, 9))
+        lFirstRow.append(token.Arrow('---->', 3, 9))
         lFirstRow.append(token.TopNode('B', 10, 12))
-        lFirstRow.append(token.Arrow(' <----> ', 13, 20))
+        lFirstRow.append(token.Arrow('<---->', 13, 20))
         lFirstRow.append(token.TopNode('C', 21, 23))
         for oToken in lFirstRow:
             oToken.row = 0
@@ -183,9 +183,9 @@ class test(unittest.TestCase):
         lSecondRow = []
         lSecondRow.append(token.Empty('', 0, 0))
         lSecondRow.append(token.Empty('', 0, 0))
-        lSecondRow.append(token.MiddleNode(' ', 10, 12))
-        lSecondRow.append(token.Arrow(' <----> ', 13, 20))
-        lSecondRow.append(token.BottomNode(' ', 21, 23))
+        lSecondRow.append(token.MiddleNode('B', 10, 12))
+        lSecondRow.append(token.Arrow('<---->', 13, 20))
+        lSecondRow.append(token.BottomNode('C', 21, 23))
         for oToken in lSecondRow[2::]:
             oToken.row = 1
         lSecondRow[2].column = 2
@@ -196,11 +196,11 @@ class test(unittest.TestCase):
 
         lThirdRow = []
         lThirdRow.append(token.SingleNode('D', 0, 2))
-        lThirdRow.append(token.Arrow(' ----> ', 3, 9))
+        lThirdRow.append(token.Arrow('---->', 3, 9))
         lThirdRow.append(token.BottomNode('B', 10, 12))
-        lThirdRow.append(token.Arrow(' <----> ', 13, 20))
+        lThirdRow.append(token.Arrow('<---->', 13, 20))
         lThirdRow.append(token.SingleNode('E', 21, 23))
-        lThirdRow.append(token.Arrow(' ----> ', 24, 30))
+        lThirdRow.append(token.Arrow('---->', 24, 30))
         lThirdRow.append(token.SingleNode('F', 31, 33))
         for oToken in lThirdRow:
             oToken.row = 2

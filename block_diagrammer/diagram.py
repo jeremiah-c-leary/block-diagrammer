@@ -6,14 +6,17 @@ class New():
 
     def __init__(self, lines: list):
         self.map = []
+        self.column_widths = []
         self.generate_tokens(lines) 
 
     def generate_tokens(self, lines: list):
         lTokens = tokenize_lines(lines)
         assign_column(lTokens)
         self.populate_map(lTokens)
+        self.calculate_column_widths()
         self.merge_nodes()
         self.expand_arrows_across_columns()
+
 
     def populate_map(self, tokens: list):
         self.rows = get_max_row_number(tokens) + 1
@@ -29,6 +32,9 @@ class New():
                     lRow.append(token.Empty('', 0, 0))
             self.map.append(lRow)
 
+    def get_column_width(self, column: int):
+        return self.column_widths[column]
+
     def get_tokens_from_column(self, column: int):
         lReturn = []
         for row in range(0, self.rows):
@@ -41,6 +47,15 @@ class New():
 
     def get_number_of_columns(self):
         return self.columns
+
+    def calculate_column_widths(self):
+        for column in range(0, self.columns):
+            self.column_widths.append(5)
+            for row in range(0, self.rows):
+                if column % 2 == 0:
+                    self.column_widths[column] = max(self.column_widths[column], len(self.map[row][column].value) + 2)
+                else:
+                    self.column_widths[column] = 5
 
     def expand_arrows_across_columns(self):
         for row in range(0, self.rows):
@@ -83,13 +98,15 @@ class New():
 
                         if isinstance(self.map[row][column], token.Empty):
                             continue
+                        elif row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
+                            convert_token_to_bottom(self, row, column)
+                        elif not row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
+                            convert_token_to_single(self, row, column)
                         elif row_above_matches_value(self, row, column) and row_below_has_blank_value(self, row, column):
                             convert_token_to_middle(self, row, column)
                             self.map[row+1][column].value = self.map[row][column].value
                         elif row_above_matches_value(self, row, column) and row_below_matches_value(self, row, column):
                             convert_token_to_middle(self, row, column)
-                        elif row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
-                            convert_token_to_bottom(self, row, column)
                         elif row_above_matches_value(self, row, column) and not row_below_matches_value(self, row, column):
                             convert_token_to_bottom(self, row, column)
                         elif row_above_is_empty(self, row, column) and row_below_is_empty(self, row, column):
@@ -97,8 +114,6 @@ class New():
                         elif not row_above_matches_value(self, row, column) and row_below_has_blank_value(self, row, column):
                             convert_token_to_top(self, row, column)
                             self.map[row+1][column].value = self.map[row][column].value
-                        elif not row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
-                            convert_token_to_single(self, row, column)
                         elif not row_above_matches_value(self, row, column) and row_below_matches_value(self, row, column):
                             convert_token_to_top(self, row, column)
 
@@ -144,7 +159,9 @@ def row_below_matches_value(self, row: int, column: int):
 
 
 def row_below_has_blank_value(self, row: int, column: int):
-    return self.map[row+1][column].value.isspace()
+    if self.map[row+1][column].value == '':
+        return True
+    return False
 
 
 def row_above_is_empty(self, row: int, column: int):
@@ -234,4 +251,9 @@ def tokenize_lines(lines: list):
         lReturn.extend(tokens)
     return lReturn
 
-
+def print_map(self):
+    for line in self.map:
+        sLine = ''
+        for item in line:
+            sLine += item.__class__.__name__ + '  '
+        print(sLine)
