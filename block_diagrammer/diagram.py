@@ -89,15 +89,17 @@ class New():
                             continue
                         elif row_above_matches_value(self, row, column):
                             convert_token_to_bottom(self, row, column)
-                        elif self.map[row][column].value.isspace():
-                            convert_token_to_bottom(self, row, column)
-                            self.map[row][column].value = self.map[row-1][column].value
+#                        elif self.map[row][column].value.isspace():
+#                            convert_token_to_bottom(self, row, column)
+#                            self.map[row][column].value = self.map[row-1][column].value
                         else:
                             convert_token_to_single(self, row, column)
                     else:
 
                         if isinstance(self.map[row][column], token.Empty):
                             continue
+                        elif row_above_is_empty(self, row, column) and row_below_is_empty(self, row, column):
+                            convert_token_to_single(self, row, column)
                         elif row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
                             convert_token_to_bottom(self, row, column)
                         elif not row_above_matches_value(self, row, column) and row_below_is_empty(self, row, column):
@@ -109,8 +111,6 @@ class New():
                             convert_token_to_middle(self, row, column)
                         elif row_above_matches_value(self, row, column) and not row_below_matches_value(self, row, column):
                             convert_token_to_bottom(self, row, column)
-                        elif row_above_is_empty(self, row, column) and row_below_is_empty(self, row, column):
-                            convert_token_to_single(self, row, column)
                         elif not row_above_matches_value(self, row, column) and row_below_has_blank_value(self, row, column):
                             convert_token_to_top(self, row, column)
                             self.map[row+1][column].value = self.map[row][column].value

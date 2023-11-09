@@ -163,11 +163,33 @@ class test(unittest.TestCase):
         lActual = oRenderer.render()
         self.assertEqual(lExpected, lActual)
 
-    def test_one_3_high_node_with_one_2_high_node_and_one_1_high_node(self):
+    def test_one_3_high_node_with_one_2_high_node_and_one_1_high_node_with_bounded_values(self):
         lLines = []
         lLines.append('|A| ----> |B|')
         lLines.append('| |       |B|')
         lLines.append('|A| <---- |C|')
+        oDiagram = diagram.New(lLines)
+        oRenderer = text.New(oDiagram)
+
+        lExpected = []
+        lExpected.append('+-----+       +-----+')
+        lExpected.append('|  A  |]---->[|  B  |')
+        lExpected.append('|     |       |     |')
+        lExpected.append('|     |       |     |')
+        lExpected.append('|     |       |     |')
+        lExpected.append('|     |       +-----+')
+        lExpected.append('|     |       +-----+')
+        lExpected.append('|     |]<----[|  C  |')
+        lExpected.append('+-----+       +-----+')
+
+        lActual = oRenderer.render()
+        self.assertEqual(lExpected, lActual)
+
+    def test_one_3_high_node_with_one_2_high_node_and_one_1_high_node(self):
+        lLines = []
+        lLines.append('|A| ----> |B|')
+        lLines.append('| |       | |')
+        lLines.append('| | <---- |C|')
         oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
@@ -220,7 +242,7 @@ class test(unittest.TestCase):
         lLines.append("|A| ----> |B| <---> |C|       |X|")
         lLines.append("|A| --------------> |C| <---> | |")
         lLines.append("|D| <-------------> |E|")
-        lLines.append("          |Y| <---- |E| <---> |W|")
+        lLines.append("          |Y| <---- | | <---> |W|")
         lLines.append("|Z| ------------------------> |W|")
         oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
