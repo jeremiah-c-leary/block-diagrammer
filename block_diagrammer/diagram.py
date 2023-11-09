@@ -89,9 +89,6 @@ class New():
                             continue
                         elif row_above_matches_value(self, row, column):
                             convert_token_to_bottom(self, row, column)
-#                        elif self.map[row][column].value.isspace():
-#                            convert_token_to_bottom(self, row, column)
-#                            self.map[row][column].value = self.map[row-1][column].value
                         else:
                             convert_token_to_single(self, row, column)
                     else:
@@ -212,17 +209,13 @@ def next_column_is_empty(self, row: int, column: int):
 
 
 def assign_column(tokens: list):
-#    print('Hello')
     dIndexes = {}
     for oToken in tokens:
         dIndexes[oToken.start] = []    
-#    print(dIndexes)
     for oToken in tokens:
         dIndexes[oToken.start].append(oToken)
-#    print(dIndexes)
     lIndexes = list(dIndexes.keys())
     lIndexes.sort()
-#    print(lIndexes)
     for iColumn, iIndex in enumerate(lIndexes):
         for oToken in dIndexes[iIndex]:
             oToken.column = iColumn 
@@ -250,10 +243,3 @@ def tokenize_lines(lines: list):
         assign_row_to_tokens(tokens, row)
         lReturn.extend(tokens)
     return lReturn
-
-def print_map(self):
-    for line in self.map:
-        sLine = ''
-        for item in line:
-            sLine += item.__class__.__name__ + '  '
-        print(sLine)
