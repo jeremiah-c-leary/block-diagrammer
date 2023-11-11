@@ -4,19 +4,40 @@ from block_diagrammer import token
 
 class New():
 
-    def __init__(self, lines: list):
+    def __init__(self, diagram: dict):
         self.map = []
         self.column_widths = []
-        self.generate_tokens(lines)
+        self.generate_tokens(diagram)
 
-    def generate_tokens(self, lines: list):
-        lTokens = tokenize_lines(lines)
+    def generate_tokens(self, diagram: dict):
+        lTokens = tokenize_lines(diagram['diagram']['lines'])
         assign_column(lTokens)
         self.populate_map(lTokens)
         self.calculate_column_widths()
         self.merge_nodes()
         self.expand_arrows_across_columns()
+        self.apply_node_attributes(diagram['diagram']['nodes'])
+        self.apply_column_attributes(diagram['diagram']['columns'])
 
+    def apply_node_attributes(self, nodes: dict):
+        lKeys = list(nodes.keys())
+        for row in range(0, self.rows):
+            for column in range(0, self.columns):
+                oToken = self.map[row][column]
+                if isinstance(oToken, token.Node):
+                    sValue = oToken.value
+                    if sValue in lKeys:
+                        oToken.color = nodes[sValue]['node_color']
+
+    def apply_column_attributes(self, nodes: dict):
+        lKeys = list(nodes.keys())
+        for row in range(0, self.rows):
+            for column in range(0, self.columns):
+                oToken = self.map[row][column]
+                if isinstance(oToken, token.Node):
+                    sValue = oToken.value
+                    if sValue in lKeys:
+                        oToken.width = nodes[sValue]['width']
 
     def populate_map(self, tokens: list):
         self.rows = get_max_row_number(tokens) + 1
@@ -48,6 +69,12 @@ class New():
     def get_number_of_columns(self):
         return self.columns
 
+    def get_number_of_rows(self):
+        return self.rows
+
+    def get_node_columns(self):
+        return range(0, self.columns, 2)
+
     def calculate_column_widths(self):
         for column in range(0, self.columns):
             self.column_widths.append(5)
@@ -66,6 +93,8 @@ class New():
                 elif previous_column_is_arrow(self, row, column) and current_column_is_arrow(self, row, column) and next_column_is_empty(self, row, column):
                     convert_current_token_to_middle_arrow(self, row, column)
                     convert_next_token_to_ending_arrow(self, row, column)
+                elif previous_column_is_node(self, row, column) and current_column_is_arrow(self, row, column) and next_column_is_node(self, row, column):
+                    convert_current_token_to_single_arrow(self, row, column)
 
     def merge_nodes(self):
         if map_has_single_row(self.map):
@@ -112,6 +141,8 @@ class New():
                             self.map[row+1][column].value = self.map[row][column].value
                         elif not row_above_matches_value(self, row, column) and row_below_matches_value(self, row, column):
                             convert_token_to_top(self, row, column)
+                        elif not row_above_matches_value(self, row, column) and not row_below_matches_value(self, row, column):
+                            convert_token_to_single(self, row, column)
 
 
 def convert_token_to_middle(self, row: int, column: int):
@@ -140,6 +171,10 @@ def convert_next_token_to_ending_arrow(self, row: int, column: int):
 
 def convert_current_token_to_middle_arrow(self, row: int, column: int):
     self.map[row][column] = self.map[row][column].convert(token.MiddleArrow)
+
+
+def convert_current_token_to_single_arrow(self, row: int, column: int):
+    self.map[row][column] = self.map[row][column].convert(token.SingleArrow)
 
 
 def row_above_matches_value(self, row: int, column: int):
@@ -189,8 +224,20 @@ def previous_column_is_node(self, row: int, column: int):
     return False
 
 
+def next_column_is_node(self, row: int, column: int):
+    if isinstance(self.map[row][column+1], token.Node):
+        return True
+    return False
+
+
 def previous_column_is_arrow(self, row: int, column: int):
     if isinstance(self.map[row][column-1], token.Arrow):
+        return True
+    return False
+
+
+def current_column_is_bidir_arrow(self, row: int, column: int):
+    if isinstance(self.map[row][column], token.Arrow):
         return True
     return False
 

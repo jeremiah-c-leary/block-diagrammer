@@ -2,123 +2,19 @@
 import unittest
 
 from block_diagrammer import diagram
-from block_diagrammer.render import text
-
-from tests import utils
+from block_diagrammer.render import svg
 
 
 class test(unittest.TestCase):
 
-    def test_node_expansion(self):
-        lLines = ['|A| ----> |B|']
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
-        oRenderer = text.New(oDiagram)
-
-        lExpected = []
-        lExpected.append('+-----+')
-        lExpected.append('|  A  |')
-        lExpected.append('+-----+')
-
-        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(0)[0], 5)
-        self.assertEqual(lExpected, lActual)
-
-        lExpected = []
-        lExpected.append('+-----+')
-        lExpected.append('|  B  |')
-        lExpected.append('+-----+')
-
-        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(2)[0], 5)
-        self.assertEqual(lExpected, lActual)
-
-    def test_node_expansion_with_larger_node_values(self):
-        lLines = ['|FIFO| ----> |      U_MY_FIFO    |']
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
-        oRenderer = text.New(oDiagram)
-
-        lExpected = []
-        lExpected.append('+------+')
-        lExpected.append('| FIFO |')
-        lExpected.append('+------+')
-
-        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(0)[0], 6)
-        self.assertEqual(lExpected, lActual)
-
-        lExpected = []
-        lExpected.append('+-----------+')
-        lExpected.append('| U_MY_FIFO |')
-        lExpected.append('+-----------+')
-
-        lActual = oRenderer.expand_node(oDiagram.get_tokens_from_column(2)[0], 11)
-        self.assertEqual(lExpected, lActual)
-
-    def test_left_arrow_expansion(self):
-        lLines = ['|A| ----> |B|']
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
-        oRenderer = text.New(oDiagram)
-
-        lExpected = []
-        lExpected.append('       ')
-        lExpected.append(']---->[')
-        lExpected.append('       ')
-
-        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
-        self.assertEqual(lExpected, lActual)
-
-    def test_right_arrow_expansion(self):
-        lLines = ['|A| <---- |B|']
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
-        oRenderer = text.New(oDiagram)
-
-        lExpected = []
-        lExpected.append('       ')
-        lExpected.append(']<----[')
-        lExpected.append('       ')
-
-        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
-        self.assertEqual(lExpected, lActual)
-
-    def test_right_arrow_expansion_with_extra_spaces(self):
-        lLines = ['|A|          <----         |B|']
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
-        oRenderer = text.New(oDiagram)
-
-        lExpected = []
-        lExpected.append('       ')
-        lExpected.append(']<----[')
-        lExpected.append('       ')
-
-        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
-        self.assertEqual(lExpected, lActual)
-
-    def test_bidir_arrow_expansion(self):
-        lLines = ['|A| <---> |B|']
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
-        oRenderer = text.New(oDiagram)
-
-        lExpected = []
-        lExpected.append('       ')
-        lExpected.append(']<--->[')
-        lExpected.append('       ')
-
-        lActual = oRenderer.expand_arrow(oDiagram.get_tokens_from_column(1)[0], 5)
-        self.assertEqual(lExpected, lActual)
-
     def test_two_nodes_with_one_arrow(self):
         lLines = ['|A| ----> |B|']
 
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
+        dDiagram = {}
+        dDiagram['diagram'] = {}
+        dDiagram['diagram']['lines'] = lLines
+
+        oDiagram = diagram.New(dDiagram)
 
         oRenderer = text.New(oDiagram)
 
@@ -132,9 +28,7 @@ class test(unittest.TestCase):
 
     def test_three_nodes_with_two_arrow(self):
         lLines = ['|A| ----> |B| <---> |C|']
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
+        oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
         lExpected = []
@@ -149,9 +43,7 @@ class test(unittest.TestCase):
         lLines = []
         lLines.append('|A| ----> |B|')
         lLines.append('|C| <---- |D|')
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
+        oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
         lExpected = []
@@ -169,9 +61,7 @@ class test(unittest.TestCase):
         lLines = []
         lLines.append('|A| ----> |B|')
         lLines.append('|A| <---- |C|')
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
+        oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
         lExpected = []
@@ -190,9 +80,7 @@ class test(unittest.TestCase):
         lLines.append('|A| ----> |B|')
         lLines.append('| |       |B|')
         lLines.append('|A| <---- |C|')
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
+        oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
         lExpected = []
@@ -214,9 +102,7 @@ class test(unittest.TestCase):
         lLines.append('|A| ----> |B|')
         lLines.append('| |       | |')
         lLines.append('| | <---- |C|')
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
+        oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
         lExpected = []
@@ -240,9 +126,7 @@ class test(unittest.TestCase):
         lLines.append("|D| <---> | |          ")
         lLines.append("          |B| <---- |E|")
         lLines.append("          |F| ----->|E|")
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
+        oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
         lExpected = []
@@ -272,9 +156,7 @@ class test(unittest.TestCase):
         lLines.append("|D| <-------------> |E|")
         lLines.append("          |Y| <---- | | <---> |W|")
         lLines.append("|Z| ------------------------> |W|")
-
-        oDiagram = diagram.New(utils.create_diagram_dict(lLines))
-
+        oDiagram = diagram.New(lLines)
         oRenderer = text.New(oDiagram)
 
         lExpected = []

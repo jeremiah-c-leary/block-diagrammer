@@ -7,6 +7,8 @@ class Token():
      self.end = end
      self.row = None
      self.column = None
+     self.color = 'grey'
+     self.width = 5
 
   def __eq__(self, other):
      if not isinstance(other, self.__class__):
@@ -71,6 +73,12 @@ class Arrow(Token):
        oReturn.row = self.row
        oReturn.column = self.column
        return oReturn
+
+
+class SingleArrow(Arrow):
+
+    def __init__(self, value: str, start: int, end: int):
+        Token.__init__(self, value, start, end)
 
 
 class StartArrow(Arrow):
