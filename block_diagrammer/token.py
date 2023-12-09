@@ -101,43 +101,49 @@ class EndArrow(Arrow):
 
 def extract_nodes(line: str) -> list:
     lReturn = []
-    bNodeFound = False
-    for iChar, sChar in enumerate(line):
-        if sChar == '|' and bNodeFound:
-            bNodeFound = False
-            lReturn.append(Node(sName.strip(), iStart, iChar))
-            continue
-        if bNodeFound:
-            sName += sChar
-        if sChar == '|' and not bNodeFound:
-            bNodeFound = True
-            iStart = iChar
-            sName = ''
+    nodeIndexes = get_node_indexes(line)
+    for startBar in range(0, len(nodeIndexes), 2):
+        startIndex, endIndex, name = extract_indexes_and_name(nodeIndexes, startBar, line)
+        lReturn.append(Node(name, startIndex, endIndex))
     return lReturn
 
 
 def extract_arrows(line: str) -> list:
     lReturn = []
-    bNodeFound = False
-    sName = ''
-    iStart = None
-    iEnd = None
+    arrowIndexes = get_arrow_indexes(line)
+
+    for startBar in range(0, len(arrowIndexes), 2):
+        startIndex, endIndex, name = extract_indexes_and_name(arrowIndexes, startBar, line)
+        if name == '':
+            lReturn.append(Empty(name, startIndex + 1, endIndex - 1))
+        else:
+            lReturn.append(Arrow(name, startIndex + 1, endIndex - 1))
+    return lReturn
+
+
+def extract_indexes_and_name(arrowIndexes, startBar, line):
+    startIndex = arrowIndexes[startBar]
+    endIndex = arrowIndexes[startBar + 1]
+    name = line[startIndex + 1:endIndex].strip()
+    return startIndex, endIndex, name
+
+
+def get_node_indexes(line: str) -> list:
+    return get_indexes_of_bars(line)
+
+
+def get_arrow_indexes(line: str) -> list:
+    indexes = get_indexes_of_bars(line)
+    del indexes[0]
+    del indexes[-1]
+    return indexes
+
+
+def get_indexes_of_bars(line: str) -> list:
+    lReturn = []
     for iChar, sChar in enumerate(line):
-        if sChar == '|' and bNodeFound:
-            bNodeFound = False
-            iStart = iChar + 1
-            continue
-        if sChar == '|' and not bNodeFound:
-            bNodeFound = True
-            iEnd = iChar - 1
-            if iStart is not None:
-                if sName.isspace():
-                    lReturn.append(Empty('', iStart, iEnd))
-                else:
-                    lReturn.append(Arrow(sName.strip(), iStart, iEnd))
-            sName = ''
-        if not bNodeFound:
-            sName += sChar
+        if sChar == '|':
+            lReturn.append(iChar)
     return lReturn
 
 
