@@ -1,0 +1,77 @@
+<svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- A marker to be used as an arrowhead -->
+    <marker
+      id="arrow"
+      viewBox="0 0 10 10"
+      refX="5"
+      refY="5"
+      markerWidth="6"
+      markerHeight="6"
+      orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" />
+    </marker>
+  </defs>
+  <rect x="0" y="2" width="40" height="116" fill="grey"/>
+  <text x="20.0" y="20.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">A</text>
+  <rect x="0" y="162" width="40" height="76" fill="grey"/>
+  <text x="20.0" y="180.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">B</text>
+  <rect x="0" y="242" width="40" height="36" fill="grey"/>
+  <text x="20.0" y="260.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">C</text>
+  <rect x="80" y="2" width="40" height="36" fill="grey"/>
+  <text x="100.0" y="20.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">D</text>
+  <rect x="80" y="82" width="40" height="116" fill="grey"/>
+  <text x="100.0" y="100.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">E</text>
+  <rect x="160" y="2" width="40" height="116" fill="grey"/>
+  <text x="180.0" y="20.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">F</text>
+  <rect x="160" y="122" width="40" height="36" fill="grey"/>
+  <text x="180.0" y="140.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">G</text>
+  <rect x="160" y="162" width="40" height="116" fill="grey"/>
+  <text x="180.0" y="180.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">H</text>
+  <rect x="240" y="42" width="40" height="36" fill="grey"/>
+  <text x="260.0" y="60.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">I</text>
+  <rect x="240" y="162" width="40" height="36" fill="grey"/>
+  <text x="260.0" y="180.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">J</text>
+  <rect x="240" y="242" width="40" height="36" fill="grey"/>
+  <text x="260.0" y="260.0" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Verdana, sans-serif" font-size="6px">K</text>
+  <!-- Ports -->
+  <rect x="40" y="15.0" width="5" height="10" fill="black" />
+  <line x1="45" y1="20.0" x2="75" y2="20.0" stroke="black" marker-end="url(#arrow)" />
+  <rect x="75" y="15.0" width="5" height="10" fill="black" />
+  <rect x="120" y="15.0" width="5" height="10" fill="black" />
+  <line x1="125" y1="20.0" x2="155" y2="20.0" stroke="black" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <rect x="155" y="15.0" width="5" height="10" fill="black" />
+  <rect x="40" y="55.0" width="5" height="10" fill="black" />
+  <line x1="45" y1="60.0" x2="155" y2="60.0" stroke="black" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <rect x="155" y="55.0" width="5" height="10" fill="black" />
+  <rect x="200" y="55.0" width="5" height="10" fill="black" />
+  <line x1="205" y1="60.0" x2="235" y2="60.0" stroke="black" marker-start="url(#arrow)" />
+  <rect x="235" y="55.0" width="5" height="10" fill="black" />
+  <rect x="40" y="95.0" width="5" height="10" fill="black" />
+  <line x1="45" y1="100.0" x2="75" y2="100.0" stroke="black" marker-end="url(#arrow)" />
+  <rect x="75" y="95.0" width="5" height="10" fill="black" />
+  <rect x="120" y="95.0" width="5" height="10" fill="black" />
+  <line x1="125" y1="100.0" x2="155" y2="100.0" stroke="black" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <rect x="155" y="95.0" width="5" height="10" fill="black" />
+  <rect x="120" y="135.0" width="5" height="10" fill="black" />
+  <line x1="125" y1="140.0" x2="155" y2="140.0" stroke="black" marker-start="url(#arrow)" />
+  <rect x="155" y="135.0" width="5" height="10" fill="black" />
+  <rect x="40" y="175.0" width="5" height="10" fill="black" />
+  <line x1="45" y1="180.0" x2="75" y2="180.0" stroke="black" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <rect x="75" y="175.0" width="5" height="10" fill="black" />
+  <rect x="120" y="175.0" width="5" height="10" fill="black" />
+  <line x1="125" y1="180.0" x2="155" y2="180.0" stroke="black" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <rect x="155" y="175.0" width="5" height="10" fill="black" />
+  <rect x="200" y="175.0" width="5" height="10" fill="black" />
+  <line x1="205" y1="180.0" x2="235" y2="180.0" stroke="black" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <rect x="235" y="175.0" width="5" height="10" fill="black" />
+  <rect x="40" y="215.0" width="5" height="10" fill="black" />
+  <line x1="45" y1="220.0" x2="155" y2="220.0" stroke="black" marker-end="url(#arrow)" />
+  <rect x="155" y="215.0" width="5" height="10" fill="black" />
+  <rect x="40" y="255.0" width="5" height="10" fill="black" />
+  <line x1="45" y1="260.0" x2="155" y2="260.0" stroke="black" marker-end="url(#arrow)" />
+  <rect x="155" y="255.0" width="5" height="10" fill="black" />
+  <rect x="200" y="255.0" width="5" height="10" fill="black" />
+  <line x1="205" y1="260.0" x2="235" y2="260.0" stroke="black" marker-end="url(#arrow)" />
+  <rect x="235" y="255.0" width="5" height="10" fill="black" />
+</svg>

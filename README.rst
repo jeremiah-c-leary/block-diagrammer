@@ -96,6 +96,7 @@ Block Diagrammer can be invoked with:
 
 Here is an example output running against a test file:
 
+.. image:: https://github.com/jeremiah-c-leary/block-diagrammer/blob/master/example.svg
 
 Documentation
 -------------
